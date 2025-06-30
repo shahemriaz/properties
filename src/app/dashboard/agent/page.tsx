@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from 'react';
-import PropertyCard from '@/src/components/PropertyCard';
+import PropertyCard from '../../components/PropertyCard';
 import { useSession } from 'next-auth/react';
 
 interface Property {
