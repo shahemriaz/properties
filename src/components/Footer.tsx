@@ -46,7 +46,7 @@ export default function Footer() {
             <h3 className="text-xl font-bold mb-4">Contact Us</h3>
             <ul className="space-y-2 text-gray-400">
               <li>Bahria Town, Lahore</li>
-              <li>Phone: +92 300 1234567</li>
+              <li>Phone: +92 323 4607217</li>
               <li>Email: info@paklahoreproperty.com</li>
             </ul>
           </div>

@@ -17,7 +17,7 @@ export default function ContactForm() {
     const whatsappMessage = `Name: ${formData.name}%0AEmail: ${formData.email}%0APhone: ${formData.phone}%0AMessage: ${formData.message}`
     
     // Open WhatsApp with the pre-filled message
-    const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '923001234567'
+    const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '923234607217'
     window.open(`https://wa.me/${whatsappNumber}?text=${whatsappMessage}`, '_blank')
   }
 
