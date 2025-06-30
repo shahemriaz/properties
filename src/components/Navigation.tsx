@@ -4,10 +4,19 @@ import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
+import { useSession, signOut } from 'next-auth/react'
 
 export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const pathname = usePathname()
+  const { data: session, status } = useSession()
+  const user = session?.user as { role?: string } | undefined
+
+  let dashboardLink = null
+  if (user?.role === 'buyer') dashboardLink = '/dashboard/buyer'
+  if (user?.role === 'agent') dashboardLink = '/dashboard/agent'
+  if (user?.role === 'builder') dashboardLink = '/dashboard/builder'
+  if (user?.role === 'admin') dashboardLink = '/dashboard/admin'
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen)
@@ -33,6 +42,22 @@ export default function Navigation() {
                 {['Home', 'Properties', 'Services', 'About', 'Contact'][idx]}
               </Link>
             ))}
+            {status === 'loading' ? null : session ? (
+              <>
+                {dashboardLink && <Link href={dashboardLink} className="text-gray-700 hover:text-primary transition-colors duration-300">Dashboard</Link>}
+                <button
+                  onClick={() => signOut({ callbackUrl: '/' })}
+                  className="text-gray-700 hover:text-primary transition-colors duration-300"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link href="/login" className="text-gray-700 hover:text-primary transition-colors duration-300">Login</Link>
+                <Link href="/register" className="text-gray-700 hover:text-primary transition-colors duration-300">Register</Link>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -72,6 +97,22 @@ export default function Navigation() {
                   {['Home', 'Properties', 'Services', 'About', 'Contact'][idx]}
                 </Link>
               ))}
+              {status === 'loading' ? null : session ? (
+                <>
+                  {dashboardLink && <Link href={dashboardLink} className="block px-3 py-2 rounded-md text-gray-700 hover:text-primary hover:bg-gray-50 transition-colors duration-300">Dashboard</Link>}
+                  <button
+                    onClick={() => signOut({ callbackUrl: '/' })}
+                    className="block px-3 py-2 rounded-md text-gray-700 hover:text-primary hover:bg-gray-50 transition-colors duration-300"
+                  >
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link href="/login" className="block px-3 py-2 rounded-md text-gray-700 hover:text-primary hover:bg-gray-50 transition-colors duration-300">Login</Link>
+                  <Link href="/register" className="block px-3 py-2 rounded-md text-gray-700 hover:text-primary hover:bg-gray-50 transition-colors duration-300">Register</Link>
+                </>
+              )}
             </div>
           </div>
         )}
